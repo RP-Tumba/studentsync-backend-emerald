@@ -10,12 +10,12 @@ import { logger } from "../utils/index.js";
 export const createStudent = async (req,res) =>{
   try{
     const{first_name, last_name, student_id, email, date_of_birth, contact_number, enrollment_date} = req.body
-    const result = await pool.query(`INSERT INTO students (First_Name,Last_Name,Student_ID,Email,Date_Of_Birth,Contact_Number,enrollment_date)
+    const result = await pool.query(`INSERT INTO students (first_name,last_name,student_id,email,date_of_birth,contact_number,enrollment_date)
       VALUES ('${first_name}','${last_name}','${student_id}','${email}','${date_of_birth}','${contact_number}','${enrollment_date}')`)
       
       logger.info("Student inserted:", result.rows)
 
-      return res.status(200).json({
+      return res.status(201).json({
         success:true,
         count : result.rows.length,
         data :result.rows
