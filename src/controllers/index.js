@@ -4,6 +4,6 @@
  *
  * To add more controllers, import them here and export as needed.
  */
-import { getAllStudents,createStudent} from "./student.controller.js";
+import { getAllStudents,createStudent, deleteStudent} from "./student.controller.js";
 
-export { getAllStudents,createStudent };
+export { getAllStudents,createStudent, deleteStudent };
