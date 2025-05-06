@@ -9,18 +9,23 @@ import { logger } from "../utils/index.js";
 
 export const createStudent = async (req,res) =>{
   try{
-    const{first_name, last_name, student_id, email, date_of_birth, contact_number, enrollment_date} = req.body
-    const result = await pool.query(`INSERT INTO students (first_name,last_name,student_id,email,date_of_birth,contact_number,enrollment_date)
-      VALUES ('${first_name}','${last_name}','${student_id}','${email}','${date_of_birth}','${contact_number}','${enrollment_date}')`)
-      
-      logger.info("Student inserted:", result.rows)
+    const { first_name, last_name, student_id, email, date_of_birth, contact_number, enrollment_date } = req.body;
 
-      return res.status(201).json({
-        success:true,
-        count : result.rows.length,
-        data :result.rows
-
-      })
+    const result = await pool.query(
+      `INSERT INTO students (first_name, last_name, student_id, email, date_of_birth, contact_number, enrollment_date)
+       VALUES ('${first_name}', '${last_name}', '${student_id}', '${email}', '${date_of_birth}', '${contact_number}', '${enrollment_date}')
+       ON CONFLICT (student_id) DO NOTHING
+       RETURNING *`
+    );
+    
+    logger.info("Student inserted");
+    
+    return res.status(201).json({
+      success: true,
+    //  count: result.rows.length, // returns the number of rows affected
+     // data: result.rows // returns the actual data inserted
+    });
+    
   }
     catch (error) {
       logger.error(error.message);
