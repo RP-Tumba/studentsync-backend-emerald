@@ -20,6 +20,7 @@ app.get("/", (req, res) => {
   res.send("Welcome to Kepler Capstone Backend!");
 });
 
+
 // api routes
 app.use("/api/v1", routes);
 

@@ -7,6 +7,29 @@
 import pool from "../config/db.js";
 import { logger } from "../utils/index.js";
 
+export const createStudent = async (req,res) =>{
+  try{
+    const{First_Name,Last_Name,Student_ID,Email,Date_Of_Birth,Contact_Number,Enrollement_Date,Profile_Picture} = req.body
+    const students = await pool.query(`INSERT INTO students (First_Name,Last_Name,Student_ID,Email,Date_Of_Birth,Contact_Number,Enrollement_Date,Profile_Picture)
+      VALUES ('${First_Name}','${Last_Name}',${Student_ID},'${Email}','${Date_Of_Birth}','${Contact_Number}','${Enrollement_Date}','${Profile_Picture})`)
+      return res.status(200).json({
+        success:true,
+        count : students.rows.length,
+        data :students.rows
+
+      })
+  }
+    catch (error) {
+      logger.error(error.message);
+      res.status(500).json({
+        success: false,
+        message: `An unexpected error occurred in POST/students, ${error?.message}`,
+      });
+
+
+  }
+}
+
 export const getAllStudents = async (req, res) => {
   try {
     const students = await pool.query("SELECT * FROM students");
