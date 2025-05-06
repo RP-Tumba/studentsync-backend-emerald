@@ -23,3 +23,21 @@ export const getAllStudents = async (req, res) => {
     });
   }
 };
+export const getStudentsbyID = async (req, res) => {
+    const student_id=req.params.student_id;
+  try {
+    const students = await pool.query(`SELECT * FROM students WHERE id=${student_id}`);
+    
+    res.status(200).json({
+      success: true,
+      count: students.rows.length,
+      data: students.rows,
+    });
+  } catch (err) {
+    logger.error(err.message);
+    res.status(500).json({
+      success: false,
+      message: `An unexpected error occurred in GET/STUDENTS, ${err?.message}`,
+    });
+  }
+};
