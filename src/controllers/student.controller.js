@@ -23,7 +23,7 @@ export const getAllStudents = async (req, res) => {
     });
   }
 };
-export const getStudentsbyID = async (req, res) => {
+export const  getStudentsbyID = async (req, res) => {
     const student_id=req.params.student_id;
   try {
     const students = await pool.query(`SELECT * FROM students WHERE id=${student_id}`);
@@ -39,5 +39,6 @@ export const getStudentsbyID = async (req, res) => {
       success: false,
       message: `An unexpected error occurred in GET/STUDENTS, ${err?.message}`,
     });
+    
   }
 };
