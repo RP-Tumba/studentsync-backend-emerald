@@ -6,4 +6,4 @@
  */
 import { getAllStudents,createStudent,getStudentsbyID} from "./student.controller.js";
 
-export { getAllStudents };
+export { getAllStudents,createStudent,getStudentsbyID };
