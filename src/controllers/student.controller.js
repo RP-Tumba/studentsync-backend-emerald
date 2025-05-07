@@ -64,8 +64,6 @@ export const  getStudentsbyID = async (req, res) => {
       err.status = 404
       errorResponse(err, req,res)
     } 
-    // we used students.rows[0] to access the first student as individual not as whole array 
-    // since we are basing on id of a student
     successResponse(res, 200, students.rows[0])
   } 
   catch (err) {
