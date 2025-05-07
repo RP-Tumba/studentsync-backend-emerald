@@ -22,10 +22,6 @@ export const createStudent = async (req,res) =>{
     
     return res.status(201).json({
       success: true,
-    //  count: result.rows.length, // returns the number of rows affected
-     // data: result.rows // returns the actual data inserted
-    });
-    
   }
     catch (error) {
       logger.error(error.message);
