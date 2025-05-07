@@ -5,12 +5,15 @@
  * Add more routes for creating, updating, and deleting students as needed.
  */
 import express from "express";
-import { getAllStudents,getStudentsbyID } from "../controllers/student.controller.js";
+
+import { getAllStudents,createStudent, getStudentsbyID} from "../controllers/student.controller.js";
 
 
 const router = express.Router();
 
 router.get("/", getAllStudents);
 router.get("/:student_id", getStudentsbyID);
+router.post("/", createStudent)
+
 
 export default router;
