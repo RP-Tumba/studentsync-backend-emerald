@@ -5,7 +5,7 @@
  * Add more functions here to handle other student-related operations (e.g., create, update, delete).
  */
 import pool from "../config/db.js";
-import { logger } from "../utils/index.js";
+import { logger,successResponse,errorResponse } from "../utils/index.js";
 
 export const createStudent = async (req,res) =>{
   try{
@@ -59,14 +59,19 @@ export const getStudentsbyID = async (req, res) => {
   try {
     const students = await pool.query(`SELECT * FROM students WHERE id=${student_id}`);
     // if student does not exit
-    if(students.rows.length == 0 ) return res.status(404).json({success: true, message: "Student doesn't exist"})
-    
-    res.status(200).json({success: true,data: students.rows, count: students.rows.length});
-  } catch (err) {
+    if(students.rows.length == 0 ) {
+      const err = new Error("Student not found")
+      err.status = 404
+      errorResponse(err, req,res)
+    } 
+    // we used students.rows[0] to access the first student as individual not as whole array 
+    // since we are basing on id of a student
+    successResponse(res, 200, students.rows[0])
+  } 
+  catch (err) {
     logger.error(err.message);
-    res.status(500).json({
-      success: false,
-      message: `An unexpected error occurred in GET/STUDENTS, ${err?.message}`,
-    });
+     const ourError = new Error(`An unexpected error occurred in GET/STUDENTS, ${err?.message}`)
+     ourError.status = 500
+     errorResponse(ourError)
   }
 };
