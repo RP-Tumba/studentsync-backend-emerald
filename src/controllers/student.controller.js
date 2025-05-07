@@ -32,8 +32,7 @@ export const createStudent = async (req,res) =>{
     
     logger.info("Student inserted");
     
-    return res.status(201).json({
-      success: true,
+    return res.status(201).json({success: true,data: result.rows})
 
   }
     catch (error) {
