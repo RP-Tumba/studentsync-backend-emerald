@@ -6,14 +6,13 @@
  */
 import express from "express";
 
-import { getAllStudents,createStudent, getStudentsbyID} from "../controllers/student.controller.js";
-
+import { getAllStudents,createStudent, getStudentsbyID,deleteStudent } from "../controllers/student.controller.js";
 
 const router = express.Router();
 
 router.get("/", getAllStudents);
+router.post("/", createStudent);
+router.delete('/:id', deleteStudent);
 router.get("/:student_id", getStudentsbyID);
 router.post("/", createStudent)
-
-
 export default router;

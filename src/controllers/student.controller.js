@@ -9,7 +9,19 @@ import { logger,successResponse,errorResponse } from "../utils/index.js";
 
 export const createStudent = async (req,res) =>{
   try{
+    const students = req.body;
+
+    if (!Array.isArray(students) || students.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: "Request body must be a non-empty array of students"
+      });
+    }
     const { first_name, last_name, student_id, email, date_of_birth, contact_number, enrollment_date } = req.body;
+
+    
+    
+
 
     const result = await pool.query(
       `INSERT INTO students (first_name, last_name, student_id, email, date_of_birth, contact_number, enrollment_date)
@@ -25,7 +37,7 @@ export const createStudent = async (req,res) =>{
     //  count: result.rows.length, // returns the number of rows affected
      // data: result.rows // returns the actual data inserted
     });
-    
+  
   }
     catch (error) {
       logger.error(error.message);
@@ -35,6 +47,37 @@ export const createStudent = async (req,res) =>{
       });
 
 
+  }
+}
+
+export const deleteStudent = async(req, res)=>{
+
+  try{
+    const { id } = req.params;
+    const delete_query = `DELETE FROM students where student_id = $1`;
+    const result = await pool.query(delete_query,[id]);
+    if(result.rowCount===0){
+      return res.status(200).json({
+        success:false, 
+        message: `Student with ID ${id} is not found.`,
+
+      })
+    logger.info(`user ${id} not found`);
+    }else{
+      return res.status(200).json({
+        success:true, 
+        message: `Student with ID ${id} deleted successfully.`,
+
+      })
+      logger.info(`user of ${id} deleted successfully`);
+
+    }
+  }catch(err){
+    logger.error(err.message);
+    res.status(500).json({
+      success: false,
+      message: `An unexpected error occured in GET/STUDENTS, ${err?.message}`,
+    })
   }
 }
 
