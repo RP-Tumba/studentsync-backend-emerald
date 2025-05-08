@@ -10,7 +10,7 @@ import pool from "../config/db.js";
 import { logger,successResponse,errorResponse } from "../utils/index.js";
 
 export const createStudent = async (req,res) =>{
-  try{
+
     const students = req.body;
     const {error,value}=studentvalidation.validate(req.body)
     if(error){
@@ -33,6 +33,11 @@ export const createStudent = async (req,res) =>{
     }
     const { first_name, last_name, student_id, email, date_of_birth, contact_number, enrollment_date } = req.body;
 
+      const { first_name, last_name, student_id, 
+      email, date_of_birth, contact_number, 
+      enrollment_date } = req.body;
+
+
     
     
 
@@ -43,24 +48,15 @@ export const createStudent = async (req,res) =>{
        ON CONFLICT (student_id) DO NOTHING
        RETURNING *`
     );
-    
+     
     logger.info("Student inserted");
     
-    return res.status(201).json({
-      success: true,
-    //  count: result.rows.length, // returns the number of rows affected
-     // data: result.rows // returns the actual data inserted
-    });
-  
+    successResponse(res,201,result.rows)
+
   }
     catch (error) {
       logger.error(error.message);
-      res.status(500).json({
-        success: false,
-        message: `An unexpected error occurred in POST/students, ${error?.message}`,
-      });
-
-
+      errorResponse(error,req,res)
   }
 }
 
