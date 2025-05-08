@@ -10,9 +10,9 @@ import { getAllStudents,createStudent, getStudentsbyID,deleteStudent } from "../
 
 const router = express.Router();
 
+
 router.get("/", getAllStudents);
 router.post("/", createStudent);
 router.delete('/:id', deleteStudent);
 router.get("/:student_id", getStudentsbyID);
 router.post("/", createStudent)
-export default router;
