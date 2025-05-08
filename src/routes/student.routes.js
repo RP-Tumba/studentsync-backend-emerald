@@ -11,6 +11,7 @@ from "../controllers/student.controller.js";
 
 const router = express.Router();
 
+
 router.get("/", getAllStudents);
 router.put('/:id',updateStudentById)
 router.post("/", createStudent);
