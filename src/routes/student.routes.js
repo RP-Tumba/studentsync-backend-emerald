@@ -16,3 +16,4 @@ router.post("/", createStudent);
 router.delete('/:id', deleteStudent);
 router.get("/:student_id", getStudentsbyID);
 router.post("/", createStudent)
+export default router;
