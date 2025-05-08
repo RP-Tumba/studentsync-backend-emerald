@@ -117,20 +117,15 @@ export const updateStudentById = async (req,res) =>{
   const update_query ="UPDATE students SET first_name=$1, last_name=$2, student_id=$3, email=$4, date_of_birth=$5, contact_number=$6, enrollment_date=$7,profile_picture=$8 WHERE id=$9";
    const final = await pool.query(update_query,[first_name,last_name,student_id,email,date_of_birth,contact_number,enrollment_date,profile_picture,id])
     
-  res.status(200).json({
-    success: true,
-    count: final.rows.length,
-    data: final.rows[0],
-  });
+   logger.info("Student updated");
+    
+    successResponse(res,201,final.rows)
   
 
   }
-  catch (err) {
-    logger.error(err.message);
-    res.status(500).json({
-      success: false,
-      message: `An unexpected error occurred in PUT/STUDENTS, ${err?.message}`,
-    });
-  }
+  catch (error) {
+    logger.error(error.message);
+    errorResponse(error,req,res)
+}
+}
 
-  }
