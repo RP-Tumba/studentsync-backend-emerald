@@ -100,4 +100,33 @@ export const  getStudentsbyID = async (req, res) => {
      ourError.status = 500
      errorResponse(ourError)
   }
+
 };
+
+
+export const updateStudentById = async (req,res) =>{
+ 
+  const id =req.params.id
+  try{
+    const checking =await pool.query(`SELECT * FROM students WHERE id=$1`,[id])
+    if(checking.rowCount ===0){
+       return res.status(404).json({success:false,message:"user not found"})
+}
+  const {first_name, last_name, student_id, email, date_of_birth, 
+  contact_number, enrollment_date,profile_picture} =req.body
+
+  const update_query ="UPDATE students SET first_name=$1, last_name=$2, student_id=$3, email=$4, date_of_birth=$5, contact_number=$6, enrollment_date=$7,profile_picture=$8 WHERE id=$9";
+   const final = await pool.query(update_query,[first_name,last_name,student_id,email,date_of_birth,contact_number,enrollment_date,profile_picture,id])
+    
+   logger.info("Student updated");
+    
+    successResponse(res,201,final.rows)
+  
+
+  }
+  catch (error) {
+    logger.error(error.message);
+    errorResponse(error,req,res)
+}
+}
+
