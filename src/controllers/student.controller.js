@@ -48,8 +48,7 @@ export const deleteStudent = async(req, res)=>{
 
     }
    
-      
-
+    
   }catch(err){
    
     errorResponse(err,req,res);
