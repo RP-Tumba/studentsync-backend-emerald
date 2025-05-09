@@ -7,6 +7,7 @@
 import studentvalidation from "../validation/validationfunction.js";
 
 import pool from "../config/db.js";
+
 import { logger,successResponse,errorResponse } from "../utils/index.js";
 
 export const createStudent = async (req,res) =>{
@@ -37,11 +38,6 @@ export const createStudent = async (req,res) =>{
       email, date_of_birth, contact_number, 
       enrollment_date } = req.body;
 
-
-    
-    
-
-
     const result = await pool.query(
       `INSERT INTO students (first_name, last_name, student_id, email, date_of_birth, contact_number, enrollment_date)
        VALUES ('${first_name}', '${last_name}', '${student_id}', '${email}', '${date_of_birth}', '${contact_number}', '${enrollment_date}')
@@ -64,30 +60,25 @@ export const deleteStudent = async(req, res)=>{
 
   try{
     const { id } = req.params;
-    const delete_query = `DELETE FROM students where student_id = $1`;
+   
+    const delete_query = `DELETE FROM students where student_id = $1 RETURNING*`;
     const result = await pool.query(delete_query,[id]);
-    if(result.rowCount===0){
-      return res.status(200).json({
-        success:false, 
-        message: `Student with ID ${id} is not found.`,
-
-      })
-    logger.info(`user ${id} not found`);
-    }else{
-      return res.status(200).json({
-        success:true, 
-        message: `Student with ID ${id} deleted successfully.`,
-
-      })
-      logger.info(`user of ${id} deleted successfully`);
+    if(result.rowCount == 0 ) {
+      const err = new Error("Student not found")
+      err.status = 404
+      errorResponse(err, req,res)
+    } else{
+   
+      successResponse(res,200,result.rows[0])
 
     }
+   
+    
   }catch(err){
-    logger.error(err.message);
-    res.status(500).json({
-      success: false,
-      message: `An unexpected error occured in GET/STUDENTS, ${err?.message}`,
-    })
+   
+    errorResponse(err,req,res);
+    
+
   }
 }
 
