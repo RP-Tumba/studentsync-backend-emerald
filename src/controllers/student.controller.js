@@ -4,12 +4,36 @@
  *
  * Add more functions here to handle other student-related operations (e.g., create, update, delete).
  */
+import studentvalidation from "../validation/validationfunction.js";
+
 import pool from "../config/db.js";
 
 import { logger,successResponse,errorResponse } from "../utils/index.js";
 
 export const createStudent = async (req,res) =>{
-  try{
+
+    const students = req.body;
+    const {error,value}=studentvalidation.validate(req.body)
+    if(error){
+     return res.status(400).json({
+        success: false,
+        message: `An Validation error occurred in POST/students, ${error?.message}`,
+      });
+    }else{
+      return res.status(201).json({
+        success: true,
+        message: `Validation checked`,
+      });
+    }
+
+    if (!Array.isArray(students) || students.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: "Request body must be a non-empty array of students"
+      });
+    }
+    const { first_name, last_name, student_id, email, date_of_birth, contact_number, enrollment_date } = req.body;
+
       const { first_name, last_name, student_id, 
       email, date_of_birth, contact_number, 
       enrollment_date } = req.body;
