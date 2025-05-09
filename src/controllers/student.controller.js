@@ -5,6 +5,7 @@
  * Add more functions here to handle other student-related operations (e.g., create, update, delete).
  */
 import pool from "../config/db.js";
+
 import { logger,successResponse,errorResponse } from "../utils/index.js";
 
 export const createStudent = async (req,res) =>{
