@@ -11,7 +11,7 @@ import pool from "../config/db.js";
 import { logger,successResponse,errorResponse } from "../utils/index.js";
 
 export const createStudent = async (req,res) =>{
-
+try{
     const students = req.body;
     const {error,value}=studentvalidation.validate(req.body)
     if(error){
@@ -32,7 +32,7 @@ export const createStudent = async (req,res) =>{
         message: "Request body must be a non-empty array of students"
       });
     }
-    const { first_name, last_name, student_id, email, date_of_birth, contact_number, enrollment_date } = req.body;
+  
 
       const { first_name, last_name, student_id, 
       email, date_of_birth, contact_number, 
