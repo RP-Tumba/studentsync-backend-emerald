@@ -16,3 +16,16 @@ export const createTable = async ()=>{
     }
 
 }
+export const recordTestData = async(req,res)=>{
+    try{
+    
+    const insert_query =`INSERT INTO courses (name,code,credits) 
+    values
+    ('Backend development','BD123',32)`;
+
+    const insert=await pool.query(insert_query);
+
+    }catch(err){
+        errorResponse(err,req,res);
+    }
+}
