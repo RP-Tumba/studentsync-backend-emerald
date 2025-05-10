@@ -3,7 +3,7 @@ import pool from "../config/db.js";
 
 import { errorResponse, successResponse } from "../utils/responseHandlers.js";
 
-export const createTable = async (req,res) => {
+export const createcourses = async (req,res) => {
     try {
         const createTable_query = `
             CREATE TABLE IF NOT EXISTS courses (
@@ -23,6 +23,7 @@ export const createTable = async (req,res) => {
     successResponse(res,200,insert_query.rows)
 
     } catch (err) {
-        console.error(" Error creating table:", err.message);
+        console.error(" Error in creating table:", err.message);
     }
 };
+

@@ -1,9 +1,9 @@
 import express from 'express';
-import {createCourseTable} from '../controllers/course.controller.js';
+import {GetAllCourses} from '../controllers/course.controller.js';
 
 const router = express.Router();
 
-router.use(createCourseTable);
+router.use("/",GetAllCourses);
 
 
 
