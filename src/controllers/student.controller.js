@@ -70,15 +70,12 @@ export const deleteStudent = async(req, res)=>{
     } else{
    
       successResponse(res,200,result.rows[0])
-
-    }
+}
    
     
   }catch(err){
    
     errorResponse(err,req,res);
-    
-
   }
 }
 
@@ -102,7 +99,7 @@ export const  getStudentsbyID = async (req, res) => {
     const student_id=req.params.student_id;
   try {
     const students = await pool.query(`SELECT * FROM students WHERE id=${student_id}`);
-    // if student does not exit
+ 
     if(students.rows.length == 0 ) {
       const err = new Error("Student not found")
       err.status = 404
