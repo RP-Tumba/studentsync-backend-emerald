@@ -18,12 +18,11 @@ router.put('/:id',updateStudentById)
 router.post("/", createStudent);
 router.delete('/:id', deleteStudent);
 router.get("/:student_id", getStudentsbyID);
-<<<<<<< HEAD
+
 router.post("/", createStudent)
 export default router;
-=======
 
 
 
-export default router;
->>>>>>> 11cb3f2543f7354f6f913c3f0b8d710d65080663
+
+

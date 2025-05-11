@@ -4,7 +4,7 @@ import {GetAllCourses,GetCourseById,InsertCourse,DeleteCourse,UpdateCourse} from
 const router = express.Router();
 
 router.get("/",GetAllCourses);
-router.get("/:id",GetAllCourses);
+router.get("/:id",GetCourseById);
 router.post("/",InsertCourse);
 router.delete("/:id",DeleteCourse);
 router.put("/:id",UpdateCourse);
